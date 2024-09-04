@@ -31,6 +31,8 @@ def create_cone_trunk(height=1, bottom_radius=1, top_radius=0, num_points=20):
     # Conectar os pontos correspondentes das duas bases para formar as laterais do tronco
     cone_trunk = []
     for i in range(len(base_vertices_bottom)):
+        if i == num_points / 2 - 1:
+            continue
         p1 = base_vertices_bottom[i]
         p2 = base_vertices_bottom[(i + 1) % len(base_vertices_bottom)]
         p3 = base_vertices_top[(i + 1) % len(base_vertices_top)]
