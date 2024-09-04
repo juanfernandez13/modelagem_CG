@@ -17,8 +17,8 @@ plot_cube(ax, c1)
 
 
 
-cot1 = create_cone()
-plot_cone(ax, cot1)
+cot1 = create_mug()
+plot_mug(ax, cot1)
 
 plt.show()
 

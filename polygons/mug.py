@@ -2,8 +2,7 @@ import numpy as np
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 from function.hermite import hermite
 
-
-def create_mug(height=1, radius=1, num_points=20):
+def create_mug(height=1, radius=1, num_points=6):
     p0_bottom = np.array([0, 0, 0])
     p1_bottom = np.array([radius, 0, 0])
 
@@ -27,7 +26,7 @@ def create_mug(height=1, radius=1, num_points=20):
     base_vertices_top += hermite(p0_top, arc_t2_top, p1_top, arc_t1_top, round(num_points / 2))
 
     # Conectar os pontos correspondentes das duas bases para formar as laterais do tronco
-    cone_trunk = []
+    mug_cylinder = []
     for i in range(len(base_vertices_bottom) - 1):
         if(i == num_points/2 - 1):
             continue
@@ -35,12 +34,22 @@ def create_mug(height=1, radius=1, num_points=20):
         p2 = base_vertices_bottom[i + 1]
         p3 = base_vertices_top[i + 1]
         p4 = base_vertices_top[i]
-        cone_trunk.append([p1, p2, p3, p4])
+        mug_cylinder.append([p1, p2, p3, p4])
 
     # Adicionar as duas bases
-    cone_trunk += [base_vertices_bottom]
+    mug_cylinder += [base_vertices_bottom]
 
-    return cone_trunk
+    p0_handler = np.array([0, 0, 0])
+    p1_handler = np.array([0, 0, radius])
+
+    arc_t1_handler = [-radius * 2, 0, 0]
+    arc_t2_handler = [radius * 2, 0, 0]
+    p = []
+    p += hermite(p0_handler, arc_t1_handler, p1_handler, arc_t2_handler, round(num_points / 2))
+
+    mug_cylinder += [p]
+
+    return mug_cylinder
 
 
 def plot_mug(ax, faces):
