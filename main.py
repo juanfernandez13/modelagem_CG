@@ -1,7 +1,9 @@
 import matplotlib.pyplot as plt
 from world import define_world
-from poligonos.cubo import create_cube, plot_cube
-from poligonos.cone import hermite_cone
+from polygons.cubo import create_cube, plot_cube
+from polygons.cone import create_cone, plot_cone
+from polygons.trunk_cone import create_cone_trunk, plot_cone_trunk
+from polygons.cylinder import create_cylinder, plot_cylinder
 
 
 fig = plt.figure()
@@ -12,6 +14,10 @@ define_world(ax)
 c1 = create_cube(position=[-5, -5, -5], scale=[2,2,2])
 plot_cube(ax, c1)
 
-hermite_cone(ax)
+
+
+cot1 = create_cylinder()
+plot_cylinder(ax, cot1)
+
 plt.show()
 
