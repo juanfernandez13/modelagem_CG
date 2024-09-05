@@ -13,7 +13,7 @@ ax = fig.add_subplot(111, projection='3d')
 define_world(ax)
 
 c1 = create_cube(position=[-5, -5, -5], scale=[2,2,2])
-plot_cube(ax, c1)
+#plot_cube(ax, c1)
 
 
 

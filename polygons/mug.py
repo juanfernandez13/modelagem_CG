@@ -4,29 +4,17 @@ from function.hermite import hermite
 
 import numpy as np
 
-def generate_circle(center, normal, radius=0.05, num_points=20):
-    theta = np.linspace(0, 2 * np.pi, num_points)
-    v = np.array([np.cos(theta), np.sin(theta)])  # Coordenadas 2D da circunferência
-
-    # Encontrar dois vetores ortogonais ao vetor normal
-    if np.allclose(normal, [0, 0, 1]):
-        u1 = np.array([1.0, 0.0, 0.0])  # Garantir que u1 seja float
-    else:
-        u1 = np.cross([0, 0, 1], normal).astype(float)  # Converter para float
-
-    u1 /= np.linalg.norm(u1)  # Normalizar
-
-    u2 = np.cross(normal, u1).astype(float)  # Garantir que u2 também seja float
-    u2 /= np.linalg.norm(u2)  # Normalizar
-
-    # Gerar pontos do círculo com broadcast correto
-    u1 = u1[:, np.newaxis]  # Transformar em coluna (3,1)
-    u2 = u2[:, np.newaxis]  # Transformar em coluna (3,1)
-
-    # Expandir os vetores circulares v para 3D (usar apenas x e y de v)
-    circle_points = center[:, None] + radius * (u1 * v[0] + u2 * v[1])  # Soma vetorial
-
-    return circle_points.T  # Transpor para obter (num_points, 3)
+def generate_circle(center, tangent, radius):
+    # Gerar um círculo no plano perpendicular à tangente
+    theta = np.linspace(0, 2 * np.pi, 10)
+    v = np.cross(tangent, [0, 0, 1])
+    if np.linalg.norm(v) == 0:
+        v = np.cross(tangent, [0, 1, 0])
+    v /= np.linalg.norm(v)
+    u = np.cross(tangent, v)
+    u /= np.linalg.norm(u)
+    circle = np.array([center + radius * (np.cos(t) * u + np.sin(t) * v) for t in theta])
+    return circle
 
 def create_mug(height=1, radius=1, num_points=20, handle_radius=0.1):
     # Definir os vértices da base e topo da caneca
@@ -92,7 +80,7 @@ def create_mug(height=1, radius=1, num_points=20, handle_radius=0.1):
         # Conectar o círculo anterior ao atual, se houver
         if previous_circle is not None:
             for j in range(len(circle) - 1):
-                mug_cylinder.append([(previous_circle[j]), previous_circle[j + 1], circle[j + 1], circle[j]])
+                mug_cylinder.append([previous_circle[j], previous_circle[j + 1], circle[j + 1], circle[j]])
         previous_circle = circle
 
     return mug_cylinder
