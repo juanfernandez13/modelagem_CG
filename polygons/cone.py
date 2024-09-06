@@ -1,5 +1,4 @@
 import numpy as np
-from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 from function.hermite import hermite
 
 
@@ -27,8 +26,7 @@ def create_cone(height=1, radius=1, num_points=20):
         cone.append([p1, p2, vertex])
 
     cone += [base_vertices]
-    return cone
+    face_color = "#190681"
+    edge_color = "#ff5800"
 
-
-def plot_cone(ax, faces):
-    ax.add_collection3d(Poly3DCollection(faces, facecolors='r', linewidths=1, edgecolors='cyan', alpha=.5))
+    return cone, face_color, edge_color

@@ -1,9 +1,12 @@
 import numpy as np
-from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 from function.hermite import hermite
 
 
 def create_cone_trunk(height=1, bottom_radius=1, top_radius=0.5, num_points=20):
+
+    face_color = "red"
+    edge_color = "cyan"
+
     p0_bottom = np.array([0, 0, 0])
     p1_bottom = np.array([bottom_radius, 0, 0])
 
@@ -43,8 +46,4 @@ def create_cone_trunk(height=1, bottom_radius=1, top_radius=0.5, num_points=20):
     cone_trunk += [base_vertices_bottom]
     cone_trunk += [base_vertices_top]
 
-    return cone_trunk
-
-
-def plot_cone_trunk(ax, faces):
-    ax.add_collection3d(Poly3DCollection(faces, facecolors='r', linewidths=1, edgecolors='cyan', alpha=.5))
+    return cone_trunk, face_color, edge_color

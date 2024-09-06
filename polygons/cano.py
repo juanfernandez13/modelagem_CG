@@ -1,6 +1,6 @@
 import numpy as np
-from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 from function.hermite import hermite
+
 
 def generate_circle(center, tangent, radius, num_points):
     # Gerar um círculo no plano perpendicular à tangente
@@ -10,13 +10,15 @@ def generate_circle(center, tangent, radius, num_points):
         v = np.cross(tangent, [0, 1, 0])
     v /= np.linalg.norm(v)
     u = np.cross(tangent, v)
-    print(np.linalg.norm(u))
     u /= np.linalg.norm(u)
     circle = np.array([center + radius * (np.cos(t) * u + np.sin(t) * v) for t in theta])
     return circle
 
+
 def create_cano(p0, t0, p1, t1, num_pointsH=20, num_pointsC=20, radius=0.5):
     cano = []
+    edge_color = "#bc57cd"
+    face_color = "#ffd700"
 
     p = hermite(p0, t0, p1, t1, num_pointsH)
 
@@ -38,7 +40,4 @@ def create_cano(p0, t0, p1, t1, num_pointsH=20, num_pointsC=20, radius=0.5):
                 cano.append([previous_circle[j], previous_circle[j + 1], circle[j + 1], circle[j]])
         previous_circle = circle
 
-    return cano
-
-def plot_cano(ax, faces):
-    ax.add_collection3d(Poly3DCollection(faces, facecolors='r', linewidths=1, edgecolors='g', alpha=.5))
+    return cano, face_color, edge_color

@@ -1,11 +1,14 @@
 import numpy as np
-from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 from function.hermite import hermite
 from polygons.cano import create_cano
 
 
 def create_mug(height=1, radius=1, num_points_mug=20, handle_radius=0.1,
                num_points_handle=20, num_points_handle_circle=20):
+
+    face_color = "#215b20"
+    edge_color = "#52ed0a"
+
     # Definir os vértices da base e topo da caneca
     p0_bottom = np.array([0, 0, 0])
     p1_bottom = np.array([radius, 0, 0])
@@ -50,10 +53,7 @@ def create_mug(height=1, radius=1, num_points_mug=20, handle_radius=0.1,
     arc_t1_handler = [radius, 0, 0]  # Controle da curva da alça
     arc_t2_handler = [-radius, 0, 0]
 
-    mug_cylinder += create_cano(p0_handler, arc_t1_handler, p1_handler, arc_t2_handler, num_points_handle, num_points_handle_circle,  handle_radius)
+    mug_cylinder += create_cano(p0_handler, arc_t1_handler, p1_handler,
+                                arc_t2_handler, num_points_handle, num_points_handle_circle, handle_radius)[0]
 
-    return mug_cylinder
-
-
-def plot_mug(ax, faces):
-    ax.add_collection3d(Poly3DCollection(faces, facecolors='r', linewidths=1, edgecolors='cyan', alpha=.5))
+    return mug_cylinder, face_color, edge_color
