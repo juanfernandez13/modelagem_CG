@@ -5,6 +5,7 @@ from polygons.cone import create_cone, plot_cone
 from polygons.trunk_cone import create_cone_trunk, plot_cone_trunk
 from polygons.cylinder import create_cylinder, plot_cylinder
 from polygons.mug import create_mug, plot_mug
+from polygons.cano import create_cano, plot_cano
 
 
 fig = plt.figure()

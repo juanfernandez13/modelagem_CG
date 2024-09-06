@@ -2,13 +2,11 @@ import numpy as np
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 from function.hermite import hermite
 
-import numpy as np
-
 def generate_circle(center, tangent, radius):
     # Gerar um círculo no plano perpendicular à tangente
     theta = np.linspace(0, 2 * np.pi, 10)
-    v = np.cross(tangent, [0, 0, 1])
-    if np.linalg.norm(v) == 0:
+    v = np.cross(tangent, [1, 0, 0])
+    if np.linalg.norm(v) < 1e-6:
         v = np.cross(tangent, [0, 1, 0])
     v /= np.linalg.norm(v)
     u = np.cross(tangent, v)
@@ -58,8 +56,8 @@ def create_mug(height=1, radius=1, num_points=20, handle_radius=0.1):
     p0_handler = np.array([radius, 0, height * 0.25])  # Começando na borda do cilindro
     p1_handler = np.array([radius, 0, height * 0.75])  # Terminando na borda no topo
 
-    arc_t1_handler = [radius * 1.5, 0, 0]  # Controle da curva da alça
-    arc_t2_handler = [-radius * 1.5, 0, 0]
+    arc_t1_handler = [radius , 0, 0]  # Controle da curva da alça
+    arc_t2_handler = [-radius, 0, 0]
 
     # Gerar pontos da curva de Hermite da alça
     p = hermite(p0_handler, arc_t1_handler, p1_handler, arc_t2_handler, round(num_points))
