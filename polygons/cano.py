@@ -41,4 +41,4 @@ def create_cano(p0, t0, p1, t1, num_pointsH=20, num_pointsC=20, radius=0.5):
     return cano
 
 def plot_cano(ax, faces):
-    ax.add_collection3d(Poly3DCollection(faces, facecolors='r', linewidths=1, edgecolors='cyan', alpha=.5))
+    ax.add_collection3d(Poly3DCollection(faces, facecolors='r', linewidths=1, edgecolors='g', alpha=.5))
