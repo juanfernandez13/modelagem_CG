@@ -10,8 +10,8 @@ def create_cube(position=[0,0,0], scale=[1,1,1]):
     vertices += position
 
     # Definindo as faces do cubo
-    faces = [#[vertices[j] for j in [0, 1, 2, 3]],
-             [vertices[j] for j in [4, 5, 6, 7]],
+    faces = [[vertices[j] for j in [0, 1, 2, 3]],
+             #[vertices[j] for j in [4, 5, 6, 7]],
              [vertices[j] for j in [0, 3, 7, 4]],
              [vertices[j] for j in [1, 2, 6, 5]],
              [vertices[j] for j in [0, 1, 5, 4]],

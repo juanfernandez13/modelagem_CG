@@ -3,7 +3,7 @@ from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 from function.hermite import hermite
 
 
-def create_cone_trunk(height=1, bottom_radius=1, top_radius=0, num_points=20):
+def create_cone_trunk(height=1, bottom_radius=1, top_radius=0.5, num_points=20):
     p0_bottom = np.array([0, 0, 0])
     p1_bottom = np.array([bottom_radius, 0, 0])
 
