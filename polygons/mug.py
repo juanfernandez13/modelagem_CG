@@ -1,20 +1,11 @@
 import numpy as np
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 from function.hermite import hermite
+from polygons.cano import create_cano
 
-def generate_circle(center, tangent, radius):
-    # Gerar um círculo no plano perpendicular à tangente
-    theta = np.linspace(0, 2 * np.pi, 10)
-    v = np.cross(tangent, [1, 0, 0])
-    if np.linalg.norm(v) < 1e-6:
-        v = np.cross(tangent, [0, 1, 0])
-    v /= np.linalg.norm(v)
-    u = np.cross(tangent, v)
-    u /= np.linalg.norm(u)
-    circle = np.array([center + radius * (np.cos(t) * u + np.sin(t) * v) for t in theta])
-    return circle
 
-def create_mug(height=1, radius=1, num_points=20, handle_radius=0.1):
+def create_mug(height=1, radius=1, num_points_mug=20, handle_radius=0.1,
+               num_points_handle=20, num_points_handle_circle=20):
     # Definir os vértices da base e topo da caneca
     p0_bottom = np.array([0, 0, 0])
     p1_bottom = np.array([radius, 0, 0])
@@ -30,18 +21,18 @@ def create_mug(height=1, radius=1, num_points=20, handle_radius=0.1):
 
     # Gerar os vértices da base maior
     base_vertices_bottom = []
-    base_vertices_bottom += hermite(p0_bottom, arc_t1_bottom, p1_bottom, arc_t2_bottom, round(num_points / 2))
-    base_vertices_bottom += hermite(p0_bottom, arc_t2_bottom, p1_bottom, arc_t1_bottom, round(num_points / 2))
+    base_vertices_bottom += hermite(p0_bottom, arc_t1_bottom, p1_bottom, arc_t2_bottom, round(num_points_mug / 2))
+    base_vertices_bottom += hermite(p0_bottom, arc_t2_bottom, p1_bottom, arc_t1_bottom, round(num_points_mug / 2))
 
     # Gerar os vértices da base menor (topo)
     base_vertices_top = []
-    base_vertices_top += hermite(p0_top, arc_t1_top, p1_top, arc_t2_top, round(num_points / 2))
-    base_vertices_top += hermite(p0_top, arc_t2_top, p1_top, arc_t1_top, round(num_points / 2))
+    base_vertices_top += hermite(p0_top, arc_t1_top, p1_top, arc_t2_top, round(num_points_mug / 2))
+    base_vertices_top += hermite(p0_top, arc_t2_top, p1_top, arc_t1_top, round(num_points_mug / 2))
 
     # Conectar os pontos correspondentes das duas bases para formar as laterais do cilindro
     mug_cylinder = []
     for i in range(len(base_vertices_bottom) - 1):
-        if i == num_points // 2 - 1:
+        if i == num_points_mug / 2 - 1:
             continue
         p1 = base_vertices_bottom[i]
         p2 = base_vertices_bottom[i + 1]
@@ -56,30 +47,10 @@ def create_mug(height=1, radius=1, num_points=20, handle_radius=0.1):
     p0_handler = np.array([radius, 0, height * 0.25])  # Começando na borda do cilindro
     p1_handler = np.array([radius, 0, height * 0.75])  # Terminando na borda no topo
 
-    arc_t1_handler = [radius , 0, 0]  # Controle da curva da alça
+    arc_t1_handler = [radius, 0, 0]  # Controle da curva da alça
     arc_t2_handler = [-radius, 0, 0]
 
-    # Gerar pontos da curva de Hermite da alça
-    p = hermite(p0_handler, arc_t1_handler, p1_handler, arc_t2_handler, round(num_points))
-
-    # Gerar círculos ao longo da curva da alça
-    handle_circles = []
-    previous_circle = None
-    for i in range(len(p)):
-        if i < len(p) - 1:
-            tangent = np.array(p[i + 1]) - np.array(p[i])
-        else:
-            tangent = np.array(p[i]) - np.array(p[i - 1])
-        tangent /= np.linalg.norm(tangent)
-
-        # Gerar o círculo usando o ponto atual e a tangente
-        circle = generate_circle(np.array(p[i]), tangent, radius=handle_radius)
-
-        # Conectar o círculo anterior ao atual, se houver
-        if previous_circle is not None:
-            for j in range(len(circle) - 1):
-                mug_cylinder.append([previous_circle[j], previous_circle[j + 1], circle[j + 1], circle[j]])
-        previous_circle = circle
+    mug_cylinder += create_cano(p0_handler, arc_t1_handler, p1_handler, arc_t2_handler, num_points_handle, num_points_handle_circle,  handle_radius)
 
     return mug_cylinder
 

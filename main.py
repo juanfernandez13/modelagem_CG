@@ -16,7 +16,7 @@ define_world(ax)
 c1 = create_cube(position=[-5, -5, -5], scale=[2,2,2])
 #plot_cube(ax, c1)
 
-
+#create_cano([-5,0,5], [10,10,0], [4,0,-4], [10,5,0], radius=0.3, num_pointsC=40)
 
 cot1 = create_mug()
 plot_mug(ax, cot1)
