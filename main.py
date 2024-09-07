@@ -1,7 +1,8 @@
 import matplotlib.pyplot as plt
+import numpy as np
 
 from polygons import create_cube, create_cano, create_mug, create_cone, create_cone_trunk
-from transformations import translation, scale_polygon
+from transformations import translation, scale_polygon, rotation_x, rotation_y, rotation_z
 from helpers import plot_2d, plot_3d, define_world3d, define_world2d
 
 
@@ -12,10 +13,10 @@ ax = fig.add_subplot(111, projection='3d')
 define_world3d(ax)
 
 cubo1, cubo1_faceColor, cubo1_edgeColor = create_cube()
-#cubo1 = rotation_x(cubo1, np.pi/4)
-#cubo1 = rotation_y(cubo1, np.pi/4)
-#cubo1 = translation(cubo1, [-2, -2, -2])
-plot_3d(ax, cubo1, cubo1_faceColor, cubo1_edgeColor)
+cubo1 = rotation_x(cubo1, np.pi/4)
+cubo1 = rotation_y(cubo1, np.pi/4)
+cubo1 = translation(cubo1, [-2, -2, -2])
+plot_3d(ax, cubo1, cubo1_faceColor, cubo1_edgeColor, 0.8)
 
 
 #Definindo cone e cano no mesmo octante
@@ -27,28 +28,20 @@ cone1 = translation(cone1, [-8, -8, -8])
 plot_3d(ax, cone1, cone1_faceColor, cone1_edgeColor)
 
 cano1, cano1_faceColor, cano1_edgeColor = create_cano([-9, -2, -9], [10, 10, 0], [-4, -2, -4], [10, 5, 0], radius=0.5)
-
-#cano1 = rotation_x(cano1, np.pi/6)
-#cano1 = translation(cano1, [0, -5, 0])
-
+cano1 = translation(cano1, [3.5, -2, 2])
 plot_3d(ax, cano1, cano1_faceColor, cano1_edgeColor)
 
 #Definindo tronco de cone e caneca no mesmo octante
 
 caneca1, caneca1_face_color, caneca1_edgeColor = create_mug()
 caneca1 = scale_polygon(caneca1, [3, 3, 3])
-#caneca1 = rotation_z(caneca1, np.pi/3)
-#caneca1 = rotation_y(caneca1, -np.pi/3)
 caneca1 = translation(caneca1, [5, 5, 5])
-
 plot_3d(ax, caneca1, caneca1_face_color, caneca1_edgeColor)
 
+
 tronco_cone, tronco_cone_face_color, tronco_cone_edge_color = create_cone_trunk()
-#tronco_cone = rotation_y(tronco_cone, np.pi/4)
-#tronco_cone = rotation_x(tronco_cone, np.pi/4)
 tronco_cone = scale_polygon(tronco_cone, [2, 2, 2])
 tronco_cone = translation(tronco_cone, [2, 2, 2])
-
 plot_3d(ax, tronco_cone, tronco_cone_face_color, tronco_cone_edge_color)
 
 plt.show()
@@ -62,7 +55,7 @@ plot_2d(ax2, cone1, face_color=cone1_faceColor, edge_color=cone1_edgeColor, axis
 plot_2d(ax2, tronco_cone, face_color=tronco_cone_face_color, edge_color=tronco_cone_edge_color, axis='xy')
 plot_2d(ax2, cubo1, face_color=cubo1_faceColor, edge_color=cubo1_edgeColor, axis='xy')
 
-plt.show()
+#plt.show()
 
 fig3, ax3 = plt.subplots()
 define_world2d(ax3, title="Vizualização nos eixos X e Z", xlabel="Eixo x", ylabel="Eixo Z")
@@ -73,7 +66,7 @@ plot_2d(ax3, cone1, face_color=cone1_faceColor, edge_color=cone1_edgeColor, axis
 plot_2d(ax3, tronco_cone, face_color=tronco_cone_face_color, edge_color=tronco_cone_edge_color, axis='xz')
 plot_2d(ax3, cubo1, face_color=cubo1_faceColor, edge_color=cubo1_edgeColor, axis='xz')
 
-plt.show()
+#plt.show()
 
 fig4, ax4 = plt.subplots()
 define_world2d(ax4, title="Vizualização nos eixos Y e Z", xlabel="Eixo Y", ylabel="Eixo Z")
@@ -84,6 +77,6 @@ plot_2d(ax4, cone1, face_color=cone1_faceColor, edge_color=cone1_edgeColor, axis
 plot_2d(ax4, tronco_cone, face_color=tronco_cone_face_color, edge_color=tronco_cone_edge_color, axis='yz')
 plot_2d(ax4, cubo1, face_color=cubo1_faceColor, edge_color=cubo1_edgeColor, axis='yz')
 
-plt.show()
+#plt.show()
 
 

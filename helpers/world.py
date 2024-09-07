@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 
 def define_world3d(ax):
+    ax.view_init(elev=30, azim=-45)  # Ajuste esses valores para cada octante
+
     ax.set_xlim([-10, 10])
     ax.set_ylim([-10, 10])
     ax.set_zlim([-10, 10])
