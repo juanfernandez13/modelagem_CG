@@ -13,9 +13,9 @@ ax = fig.add_subplot(111, projection='3d')
 define_world3d(ax)
 
 cubo1, cubo1_faceColor, cubo1_edgeColor = create_cube()
-cubo1 = rotation_x(cubo1, np.pi/4)
-cubo1 = rotation_y(cubo1, np.pi/4)
-cubo1 = translation(cubo1, [-2, -2, -2])
+#cubo1 = rotation_x(cubo1, np.pi/4)
+#cubo1 = rotation_y(cubo1, np.pi/4)
+cubo1 = translation(cubo1, [1, 1, 1])
 plot_3d(ax, cubo1, cubo1_faceColor, cubo1_edgeColor, 0.8)
 
 
