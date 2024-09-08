@@ -88,7 +88,7 @@ plt.show()
 #plot 3d na visão da camera
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
-
+ax.set_title("Visão 3D da camera posicionada em (5, -10, 5)")
 plot_polygons(ax, [cubo1, tronco_cone, caneca1], [cubo1_faceColor, tronco_cone_face_color, caneca1_face_color],
         [cubo1_edgeColor, tronco_cone_edge_color, caneca1_edgeColor],[5, -10, 5], 60)
 
@@ -96,6 +96,7 @@ plt.show()
 
 #plot 2d na visão da camera
 figCam1, axCam1 = plt.subplots()
+axCam1.set_title("Visão 2D da camera posicionada em (5, -10, 5)")
 
 plotCam(axCam1, [cubo1, tronco_cone, caneca1],
         [ cubo1_faceColor, tronco_cone_face_color, caneca1_face_color],

@@ -20,19 +20,19 @@ def create_cano(p0, t0, p1, t1, num_pointsH=20, num_pointsC=20, radius=0.5):
     edge_color = "#bc57cd"
     face_color = "#ffd700"
 
-    p = hermite(p0, t0, p1, t1, num_pointsH)
+    pontosHermite = hermite(p0, t0, p1, t1, num_pointsH)
 
     # Gerar círculos ao longo da curva da alça
     previous_circle = None
-    for i in range(len(p)):
-        if i < len(p) - 1:
-            tangent = np.array(p[i + 1]) - np.array(p[i])
+    for i in range(len(pontosHermite)):
+        if i < len(pontosHermite) - 1:
+            tangent = np.array(pontosHermite[i + 1]) - np.array(pontosHermite[i])
         else:
-            tangent = np.array(p[i]) - np.array(p[i - 1])
+            tangent = np.array(pontosHermite[i]) - np.array(pontosHermite[i - 1])
         tangent /= np.linalg.norm(tangent)
 
         # Gerar o círculo usando o ponto atual e a tangente
-        circle = generate_circle(np.array(p[i]), tangent, radius, num_pointsC)
+        circle = generate_circle(np.array(pontosHermite[i]), tangent, radius, num_pointsC)
 
         # Conectar o círculo anterior ao atual, se houver
         if previous_circle is not None:
