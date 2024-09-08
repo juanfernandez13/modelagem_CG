@@ -1,5 +1,5 @@
-import matplotlib.pyplot as plt
 import numpy as np
+import matplotlib.pyplot as plt
 
 from polygons import create_cube, create_cano, create_mug, create_cone, create_cone_trunk
 from transformations import translation, scale_polygon, rotation_x, rotation_y, rotation_z
@@ -85,21 +85,21 @@ plot_2d(ax4, cubo1, face_color=cubo1_faceColor, edge_color=cubo1_edgeColor, axis
 
 plt.show()
 
-#plot 2d na visão da camera
-#figCam1, axCam1 = plt.subplots()
-
-#plotCam(axCam1, [cone1, cano1, cubo1, tronco_cone, caneca1],
-#        [cone1_faceColor, cano1_faceColor, cubo1_faceColor, tronco_cone_face_color, caneca1_face_color],
-#        [cone1_edgeColor, cano1_edgeColor, cubo1_edgeColor, tronco_cone_edge_color, caneca1_edgeColor],
-#        cam_position=[10, 10, 10], target_position=[1, 1, 1])
-
-#plt.show()
-
 #plot 3d na visão da camera
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
 
-plot_polygons(ax, [cone1, cano1, cubo1, tronco_cone, caneca1], [cone1_faceColor, cano1_faceColor, cubo1_faceColor, tronco_cone_face_color, caneca1_face_color],
-        [cone1_edgeColor, cano1_edgeColor, cubo1_edgeColor, tronco_cone_edge_color, caneca1_edgeColor],[10, 10, 10],np.array([1, 1, 1]), 60)
+plot_polygons(ax, [cubo1, tronco_cone, caneca1], [cubo1_faceColor, tronco_cone_face_color, caneca1_face_color],
+        [cubo1_edgeColor, tronco_cone_edge_color, caneca1_edgeColor],[5, -10, 5], 60)
+
+plt.show()
+
+#plot 2d na visão da camera
+figCam1, axCam1 = plt.subplots()
+
+plotCam(axCam1, [cubo1, tronco_cone, caneca1],
+        [ cubo1_faceColor, tronco_cone_face_color, caneca1_face_color],
+        [ cubo1_edgeColor, tronco_cone_edge_color, caneca1_edgeColor],
+        cam_position=[5, -10, 5], target_position=[-5, -10, -5])
 
 plt.show()

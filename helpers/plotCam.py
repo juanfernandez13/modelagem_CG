@@ -8,6 +8,26 @@ def normalize(v):
         return v
     return v / norm
 
+
+def calculate_polygon_centroid(polygon):
+    # Soma todas as coordenadas dos vértices do polígono
+    centroid = np.mean(polygon, axis=0)
+    return centroid
+
+# Função para calcular o ponto médio entre vários polígonos
+def calculate_polygons_midpoint(polygons):
+    centroids = []
+
+    # Calcula o centroide de cada polígono
+    for polygon in polygons:
+        for faces in polygon:
+            centroid = calculate_polygon_centroid(faces)
+            centroids.append(centroid)
+
+    # Calcula o ponto médio entre os centros de massa dos polígonos
+    midpoint = np.mean(centroids, axis=0)
+    return midpoint
+
 # Função para calcular a matriz de visualização da câmera
 def look_at(camera_position, target_position, up_vector=np.array([0, 0, 1])):
     forward = normalize(target_position - camera_position)
@@ -71,6 +91,7 @@ def plot_2d_projection(ax, polygons_2d, face_color, edge_color, alpha=0.5):
 
 # Função para realizar a projeção e o plot
 def plotCam(ax, polygons, fcolor, edcolor,cam_position=[10, 10, 10], target_position=[0, 0, 0], fov=np.pi/3, aspect_ratio=1, near=0.1, far=10):
+    target_position = calculate_polygons_midpoint(polygons)
     for i in range(0, len(polygons)):
         projected_polygons = project_to_2d(polygons[i], np.array(cam_position), np.array(target_position), fov,
                                            aspect_ratio, near, far)
